@@ -2,9 +2,8 @@ package com.cursojava.curso.resources;
 
 import java.util.List;
 
-import com.cursojava.curso.entities.Category;
 import com.cursojava.curso.entities.Product;
-import com.cursojava.curso.services.CategoryService;
+import com.cursojava.curso.services.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/categories")
+@RequestMapping(value = "/products")
 public class ProductResource{
 
     @Autowired

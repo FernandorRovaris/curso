@@ -9,12 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_product")
 public class Product implements Serializable{
-    public static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,18 +25,23 @@ public class Product implements Serializable{
     private String name;
     private String description;
     private Double price;
-    private String omgURL;
+    private String imageURL;
 
+    @ManyToMany
+    @JoinTable( name = "tb_product_category", 
+                joinColumns = @JoinColumn(name = "product_id"), 
+                inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    public Product(){}
+    public Product() {
+    }
 
-    public Product(Long id, String name, String description, Double price, String omgURL, Set<Category> categories) {
+    public Product(Long id, String name, String description, Double price, String imageURL) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.omgURL = omgURL;
+        this.imageURL = imageURL;
     }
 
     public Long getId() {
@@ -68,12 +76,12 @@ public class Product implements Serializable{
         this.price = price;
     }
 
-    public String getOmgURL() {
-        return this.omgURL;
+    public String getImageURL() {
+        return this.imageURL;
     }
 
-    public void setOmgURL(String omgURL) {
-        this.omgURL = omgURL;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public Set<Category> getCategories() {
@@ -88,12 +96,12 @@ public class Product implements Serializable{
             return false;
         }
         Product product = (Product) o;
-        return Objects.equals(id, product.id);
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price) && Objects.equals(imageURL, product.imageURL) && Objects.equals(categories, product.categories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id, name, description, price, imageURL, categories);
     }
 
 }
